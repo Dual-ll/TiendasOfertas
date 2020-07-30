@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+{% load socialaccount %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'registration/css/loginstyle.css' %}">
+
+<style>.errorlist{color:red;}</style>
+<main role="main">
+  <div class="container">
+    <form action="" method="post">
+      <div class="row">
+        <h2 style="text-align:center">Login Social o Manual</h2>
+        <div class="vl">
+          <span class="vl-innertext">or</span>
+        </div>
+  
+        <div class="col">
+          <a href="{%provider_login_url "facebook" method="oauth2"%}" class="fb btn">
+            <i class="fa fa-facebook fa-fw"></i> Ingresar con Facebook
+          </a>
+        </div>
+  
+        <div class="col">
+          <div class="hide-md-lg">
+            <p>Or sign in manually:</p>
+          </div>
+          {% if 'register' in request.GET %}
+              <p style="color:green">Usuario correctamente, ya puedes identificarte.</p>
+          {% endif %}
+          {% csrf_token %}
+            <input type="text" name="username" autofocus maxlength="254" placeholder="Username" required
+              id="id_username" class="form-control"/>
+            <input type="password" name="password" placeholder="Password" required
+              id="id_password" >
+            <input type="submit" value="Login">
+          {% if form.non_field_errors %}
+            <p style="color:red">Usuario o contraseña incorrectos, prueba de nuevo.</p>
+          {% endif %}
+        </div>
+  
+      </div>
+    </form>
+  </div>
+  
+  <div class="bottom-container">
+    <div class="row">
+      <div class="col">
+        <a href="{% url 'signup' %}" style="color:white" class="btn">Crear Cuenta</a>
+      </div>
+      <div class="col">
+        <a href="{% url 'password_reset' %}" style="color:white" class="btn">Olvidaste tu contraseña?</a>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
